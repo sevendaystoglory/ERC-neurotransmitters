@@ -3,18 +3,25 @@ import json
 
 openai.api_key = "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"
 from my_functions import get_current_weather,adder,inject_oxytocin,inject_endorphin
+from measure_dopamine import measure_dopamine
+from tools import generate_context
 
-memory= []
-user_history = []
-assistant_history = []
+memory= [{'role':'system', 'content':'Simulate the response as belonging to a cool dude'}]
+organic_memory=[{'role':'system', 'content':'Simulate the response as belonging to a cool dude'}]
 
 def run_conversation():
-    print("memory: ", memory)
-    # Step 1: send the conversation and available functions to 
     content = input("User: ")
+    #sysnthesis of v7 neurotransmitter vector
     messages = [{"role": "user", "content": content}]
-    user_history.append(messages[-1])
+    organic_memory.append(messages[-1])
     memory.append(messages[-1])
+    print("memory: ", memory)
+    # Step 1: send the conversation and available functions to
+    context= generate_context(organic_memory)
+    dopamine_level=measure_dopamine(context["choices"][0]["message"]['content']+content)
+    print("dopamine_level: ", dopamine_level )
+    print("context--->", context)
+    memory.append({'role':'system', 'content': context["choices"][0]["message"]['content'] + "The next response follows from this information."})
     functions = [
         {
             "name": "inject_oxytocin",
@@ -23,25 +30,26 @@ def run_conversation():
                 "type": "object",
                 "properties": {
                     "level": {
-                        "type": "string",
-                        "description": "Evaluate the oxytocin level of the user, where 0 is minimum intensity and 100 is full intenstiy",
+                        "type": "number",
+                        "description": "The level of oxytocin as prompted by the user",
                     },
                 },
             },
         },
-         {
+        {
             "name": "inject_endorphin",
             "description": "triggered when encounters '/set endorphin'",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "level": {
-                        "type": "string",
-                        "description": "Evaluate the endorphin level of the user, where 0 is minimum intensity and 100 is full intenstiy",
+                        "type": "number",
+                        "description": "The level of endorphin as prompted by the user",
                     },
                 },
             },
         }
+        
     ]
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo-0613",
@@ -60,7 +68,7 @@ def run_conversation():
         }
         )  # extend conversation with assistant's reply
     print("Ai response: ", response_message)
-    assistant_history.append({
+    organic_memory.append({
         "role": "assistant",
         "content": response_content,
     }
@@ -72,10 +80,10 @@ def run_conversation():
         # Note: the JSON response may not always be valid; be sure to handle errors
         available_functions = {
             "inject_oxytocin" : inject_oxytocin,
-            "inject_endorphin" : inject_endorphin,
+            "inject_endorphin" : inject_endorphin
         }  # only one function in this example, but you can have multiple
         function_name = response_message["function_call"]["name"]
-        print ("LODA", response_message)
+        print ("L0000000000DA", response_message)
         fuction_to_call = available_functions[function_name]
         function_args = json.loads(response_message["function_call"]["arguments"])
         if fuction_to_call==get_current_weather:
