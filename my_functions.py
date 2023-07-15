@@ -19,7 +19,7 @@ def adder(a,b):
 
 def inject_oxytocin(level=50):
     info = {
-        "inject" : "simulate the next response as belonging to a person with oxytocin level of " + str(normalize(level)) + ", where the level 0 indicates no intensity and 100 indicates full intensity",
+        "inject" : "Simulate the next response as belonging to a person with oxytocin level of " + str(normalize(level)) + ", where the level 0 indicates no intensity and 100 indicates full intensity. Oxytocin, known as the social bonding hormone, can influence text messaging in several ways. Increased oxytocin levels might lead to empathetic, compassionate, and understanding messages. It could encourage more frequent and deep communication, as well as affectionate language. Oxytocin's stress-reducing properties might result in calmer, comforting language. ",
     }
     return json.dumps(info)
 def inject_endorphin(level=50):
