@@ -2,23 +2,25 @@ import json
 import openai
 openai.api_key = "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"
 from my_functions import isolate_value
-from tools import generate_summary
+
 
 def measure_dopamine(context):
-    full_message = [{'role' : 'system' , 'content' : "Dopamine is a neurotransmitter in the brain that plays a significant role in reward, motivation, and mood. Dopamine levels can be estimated from an individual's text messages but without a detailed psychological and neurological evaluation. We can infer its potential effects based on known functions of dopamine: Motivation and Engagement: High levels of dopamine are often associated with increased motivation and enthusiasm. This might translate to more frequent and engaged text messaging. A person might initiate conversations, respond quickly, and show enthusiasm in their responses. Positivity: Since dopamine is associated with reward and pleasure, higher dopamine levels might make a person more likely to use positive language and express joy or excitement in their text messages. Creativity: Dopamine is also linked to creativity. Higher levels might lead to more creative and unique messages, as well as a willingness to engage in deep and thought-provoking conversations. Risk-taking: Dopamine has been linked to risk-taking behavior. In the context of text messaging, this might mean being more open, saying things that the individual might usually hold back, or initiating conversations with new people. Keep in mind these are broad generalizations, and individual behavior can be influenced by many other factors, including other neurotransmitters, personal circumstances, cultural norms, and individual personality traits. Also, while we often associate dopamine with positive behaviors and feelings, extremely high levels can also contribute to impulsivity and addiction. Lastly, the effects of lower levels of dopamine can contrast with the effects of higher levels, potentially leading to decreased motivation, less frequent and engaged texting, and more negative or neutral language."},{'role':'user', 'content' : context},{'role':'system', 'content' : 'Predict the level of Dopamine in the system of this person, where level 0 means minimum intensity and level 100 denotes maximum intensity. You must assign a level of dopamine to this person.'}] 
+    full_message = [{'role' : 'system' , 'content' : "Dopamine, a neurotransmitter associated with reward, motivation, and mood, can indirectly influence text messaging. High dopamine levels may lead to frequent, engaged, positive, creative, and risk-taking messages, reflecting increased motivation, joy, creativity, and openness. Low dopamine levels could result in less frequent, less engaged, and more negative or neutral messaging. However, these are broad generalizations and individual behavior is influenced by various other factors such as other neurotransmitters, personal circumstances, and personality traits. Additionally, extremely high dopamine levels can lead to impulsivity and addiction."},{'role':'system', 'content' : context},{'role':'system', 'content' : 'Predict the level of Dopamine in the system of this person, where level 0 means minimum intensity and level 100 denotes maximum intensity. You must assign a level of dopamine to this person.'}] 
 
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo-0613",
+        temperature= 0.3,
+        presence_penalty= 0.6,
         messages= full_message,
         functions=[{
             "name": "isolate_value",
-            "description": "called when a numerical average value of neurotransmitter dopamine assigned to the user from the response",
+            "description": "assigns a numerical of dopamine to the user the text is referring to. 0 being least intensive, 100 being most intensive",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "value": {
                         "type": "number",
-                        "description": "The level of neurotransmitter as prompted by the user",
+                        "description": "The level of dopamine as prompted by the user",
                     },
                 },
             },
@@ -49,7 +51,8 @@ def measure_dopamine(context):
             }]
 
     
-        
+        print("CALLED---measure_dopamine_1")
         return("DOPAMINE LEVELS IN USER ==", dopamine[0]["content"])
+    print("CALLED---measure_dopamine_2")
     return ("DOPAMINE LEVELS IN USER ==",response_message["content"])
     # return ("DOPAMINE LEVELS IN USER ==", 'no response from system , REASON SUMMARY:', generate_summary([{'role':'system', 'content': response_message["content"]}])["choices"][0]["message"])

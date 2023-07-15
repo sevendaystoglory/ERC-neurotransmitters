@@ -2,16 +2,16 @@ import openai
 openai.api_key = "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"
 
 def generate_context(organic_memory):
-    organic_memory.append({'role' : 'system', 'content': "From the history of conversation, generate a believeble user persona and user history that is consistent with the conversation."})
+    organic_memory.append({'role' : 'system', 'content': "From the history of conversation utterances of the user, generate a 100 words paragraph that summarizes what the user must be feeling now. You may generate additional details if required. Always refer to the user in third person in your response."})
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo-0613",
         messages= organic_memory,
         temperature = 0.5, 
         max_tokens= 100,
     )
-    print("organic memory used for content", organic_memory)
-    print(response)
+
     organic_memory.pop()
+    print("CALLED---generate_context")
     return(response)
  
 def generate_summary(memory):
@@ -23,6 +23,6 @@ def generate_summary(memory):
         max_tokens= 100,
     )
     # memory.pop()
-    
+    print("CALLED---generate_summary")
     return(response)
 
