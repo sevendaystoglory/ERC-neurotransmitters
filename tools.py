@@ -1,6 +1,3 @@
-import openai
-openai.api_key = "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"
-
 def normalize(num):
     try:
         num = int(num)

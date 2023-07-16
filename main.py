@@ -2,12 +2,14 @@ import openai
 import json
 
 openai.api_key = "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"
-from my_functions import inject_oxytocin,inject_endorphin
+from my_functions import inject_oxytocin, inject_endorphin, rephrase
 from measure_dopamine import measure_dopamine
+from measure_endorphin import measure_endorphin
 from available_functions import functions
 from memory import *
 from generate import generate_context
 from neurotransmitters import Neurotransmitter
+from model import model
 
 
 def run_conversation():
@@ -22,36 +24,46 @@ def run_conversation():
         # Step 1: send the conversation and available functions to
         context= generate_context(chat_memory)
         dopamine_level=measure_dopamine(context["choices"][0]["message"]['content']+user_message)
+        endorphin_level=measure_endorphin(context["choices"][0]["message"]['content']+user_message)
         print("\ndopamine_level: ", dopamine_level )
+        print("\ndopamine_level: ", endorphin_level )
         print("\n===============CONTEXT========================>", context["choices"][0]["message"], '\n')
         memory.append({'role':'system', 'content': context["choices"][0]["message"]['content'] + "The next response follows from this information."})
        
         response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo-0613",
+        model=model,
         messages=memory,
+        temperature = 0.5,
+        presence_penalty = 0.4, #penalizes new tokens
+        max_tokens = 200,
         # function_call="auto", # auto is default, but we'll be explicit
         )
 
         response_content=response['choices'][0]['message']['content']
-
-        memory.append({
-            "role": "assistant",
-            "content": response_content,
-        })
         chat_memory.append({
             "role": "assistant",
             "content": response_content,
         })
-        print("\nAssistant Response: ", response_content)
+        rephrased_response=rephrase(chat_memory)
+        memory.append({
+            "role": "assistant",
+            "content": rephrased_response,
+        })
+        #rephrase chat_memory
+        print("\nAssistant Response: ", rephrased_response)
     else:
-        print("DETECTED COMMAND")
-        nt7=Neurotransmitter()
-        nt7.process_input(user_message)
+        try:
 
-        memory.append({'role': 'system', 'content': "Simulate the next response as belonging to a person with oxytocin level of " + str(nt7.array[1]) + ", where the level 0 indicates no intensity and 100 indicates full intensity. Oxytocin, known as the social bonding hormone, can influence text messaging in several ways. Increased oxytocin levels might lead to empathetic, compassionate, and understanding messages. It could encourage more frequent and deep communication, as well as affectionate language. Oxytocin's stress-reducing properties might result in calmer, comforting language."})
-        print("OXYTOCIN set to", str(nt7.array[1]))
+            nt7=Neurotransmitter()
+            nt7.process_input(user_message)
+
+            memory.append({'role': 'system', 'content': "Simulate every following response as belonging to a person with oxytocin level of " + str(nt7.array[1]) + " and endorphin level of " + str(nt7.array[3])+", where the level 0 indicates no intensity and 100 indicates full intensity. Oxytocin, known as the social bonding hormone, can influence text messaging in several ways. Increased oxytocin levels might lead to empathetic, compassionate, and understanding messages. It could encourage more frequent and deep communication, as well as affectionate language. Oxytocin's stress-reducing properties might result in calmer, comforting language. Endorphins, natural painkillers linked to pleasure and well-being, can affect chat conversations when levels are high. They can result in more positive and upbeat language use, demonstrating an improved mood. High endorphin levels may increase conversation energy and enthusiasm, reduce expressions of physical discomfort and stress, and potentially stimulate more creative or imaginative dialogue. Every response that follows should be consistent with this."})
+            print("/DETECTED COMMAND")
+            print(nt7.get_changed())
+        except KeyError and ValueError and IndexError:
+            print("/UNKNOWN COMMAND")
         # response = openai.ChatCompletion.create(
-        #     model="gpt-3.5-turbo-0613",
+        #     model=model,
         #     messages=memory,
         #     functions=functions,
         #     function_call="auto", # auto is default, but we'll be explicit
