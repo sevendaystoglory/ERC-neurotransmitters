@@ -8,7 +8,7 @@ class Neurotransmitter:
             'endorphin': 3,
             'gaba': 4,  
             'norepinephrine': 5,
-            'isocholine': 6
+            'dopamine': 6
         }
         self.position_to_name = {v: k for k, v in self.name_to_position.items()}  # reverse map
         self.description_to_value = {

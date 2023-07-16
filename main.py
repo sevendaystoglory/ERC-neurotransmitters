@@ -5,6 +5,8 @@ openai.api_key = "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"
 from my_functions import inject_oxytocin, inject_endorphin, rephrase
 from measure_dopamine import measure_dopamine
 from measure_endorphin import measure_endorphin
+from measure_oxytocin import measure_oxytocin
+from measure_adrenaline import measure_adrenaline
 from available_functions import functions
 from memory import *
 from generate import generate_context
@@ -25,8 +27,12 @@ def run_conversation():
         context= generate_context(chat_memory)
         dopamine_level=measure_dopamine(context["choices"][0]["message"]['content']+user_message)
         endorphin_level=measure_endorphin(context["choices"][0]["message"]['content']+user_message)
+        oxytocin_level=measure_oxytocin(context["choices"][0]["message"]['content']+user_message)
+        adrenaline_level=measure_adrenaline(context["choices"][0]["message"]['content']+user_message)
         print("\ndopamine_level: ", dopamine_level )
-        print("\ndopamine_level: ", endorphin_level )
+        print("\nendorphin_level: ", endorphin_level )
+        print("\noxytocin_level: ", oxytocin_level )
+        print("\nadrenaline_level: ", adrenaline_level )
         print("\n===============CONTEXT========================>", context["choices"][0]["message"], '\n')
         memory.append({'role':'system', 'content': context["choices"][0]["message"]['content'] + "The next response follows from this information."})
        
@@ -57,10 +63,10 @@ def run_conversation():
             nt7=Neurotransmitter()
             nt7.process_input(user_message)
 
-            memory.append({'role': 'system', 'content': "Simulate every following response as belonging to a person with oxytocin level of " + str(nt7.array[1]) + " and endorphin level of " + str(nt7.array[3])+", where the level 0 indicates no intensity and 100 indicates full intensity. Oxytocin, known as the social bonding hormone, can influence text messaging in several ways. Increased oxytocin levels might lead to empathetic, compassionate, and understanding messages. It could encourage more frequent and deep communication, as well as affectionate language. Oxytocin's stress-reducing properties might result in calmer, comforting language. Endorphins, natural painkillers linked to pleasure and well-being, can affect chat conversations when levels are high. They can result in more positive and upbeat language use, demonstrating an improved mood. High endorphin levels may increase conversation energy and enthusiasm, reduce expressions of physical discomfort and stress, and potentially stimulate more creative or imaginative dialogue. Every response that follows should be consistent with this."})
+            memory.append({'role': 'system', 'content': "Simulate every following response as belonging to a person with oxytocin level of " + str(nt7.array[1]) + " and endorphin level of " + str(nt7.array[3])+" and dopamine level of " + str(nt7.array[6])+ "and adrenaline level of "+str(nt7.array[0]) +" where the level 0 indicates no intensity and 100 indicates full intensity. Oxytocin, known as the social bonding hormone, can influence text messaging in several ways. Increased oxytocin levels might lead to empathetic, compassionate, and understanding messages. It could encourage more frequent and deep communication, as well as affectionate language. Oxytocin's stress-reducing properties might result in calmer, comforting language. Endorphins, natural painkillers linked to pleasure and well-being, can affect chat conversations when levels are high. They can result in more positive and upbeat language use, demonstrating an improved mood. High endorphin levels may increase conversation energy and enthusiasm, reduce expressions of physical discomfort and stress, and potentially stimulate more creative or imaginative dialogue. Every response that follows should be consistent with this. Dopamine, a neurotransmitter associated with reward, motivation, and mood, can indirectly influence text messaging. High dopamine levels may lead to frequent, engaged, positive, creative, and risk-taking messages, reflecting increased motivation, joy, creativity, and openness. Low dopamine levels could result in less frequent, less engaged, and more negative or neutral messaging. However, these are broad generalizations and individual behavior is influenced by various other factors such as other neurotransmitters, personal circumstances, and personality traits. Additionally, extremely high dopamine levels can lead to impulsivity and addiction. Adrenaline, a hormone associated with stress, excitement, or danger, can significantly impact a user's chat conversations. High adrenaline levels often quicken cognitive processing, potentially leading to faster responses, like swift replies or interjections. It can heighten emotions, resulting in more passionate or intense exchanges. For example, a user might use more exclamation marks, capital letters, or emotionally-charged language. Adrenaline can concentrate the focus on perceived essential tasks, possibly creating more focused responses. For instance, a user may stick strictly to a topic without deviating. It may enhance memory consolidation, enabling the user to recall key parts of the conversation more vividly. However, heightened arousal might increase the propensity for mistakes, like typing errors or rushed judgments. For example, a user might send messages with more typos or use less tactful language."})
             print("/DETECTED COMMAND")
             print(nt7.get_changed())
-        except KeyError and ValueError and IndexError:
+        except:
             print("/UNKNOWN COMMAND")
         # response = openai.ChatCompletion.create(
         #     model=model,
