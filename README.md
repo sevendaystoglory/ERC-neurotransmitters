@@ -8,3 +8,6 @@ This MVP captures the user's tone and generates a convincing backstory for the u
 
 # MVP: layer two
 This MVP is to bring out several aspects of a genuine human conversation--> mood{1}, knowledge of events{2}, knowledge of self{3}, tone/ use of words{4}, number of replies per one reply of user{5}, length of reply{6}
+
+After completing the checkpoint 2, following are the developments.
+The replies are completetey based off of the temp_memory and the output format is as follows: {'formality': 'very informl', 'typos/grammar' : 'typing in low priority, a few typos' , 'attentiveness' : "little interest in the conversation", "tone and language" : "very direct and not respecting" , "number of lines in Juan's responses" : '2' , "length of each response" : '5' , 'response_1' : "Umm, no" , "response_2" : "sorry but I dont have anyone" , "response_3" : " " , "response_4" : " "}
