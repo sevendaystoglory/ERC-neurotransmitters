@@ -1,0 +1,10 @@
+{
+    "0000" : {"status" : "sleeping", "nt7" : [0,0,0,0,0,0,0]}, 
+    "0259" : {"status" : "sleeping", "nt7" : [0,0,0,0,0,0,0]}, 
+    "0559" : {"status" : "you just woke up. You are getting ready for college, in a hurry. You did your prayers and ate a heavy breakfast.", "nt7" : [60,60,60,60,60,60,60]}, 
+    "1059" : {"status" : "you just fininshed your classes. You are exhausted, not in a mood to chat. You are heading our for lunch", "nt7" : [70,70,70,70,70,70,70]}, 
+    "1459" : {"status" : "You had your lunch. Your classes are pending. You have a presentation in 1 hour. Very nervous!", "nt7" : [80,80,80,80,80,80,80]}, 
+    "1759" : {"status" : "Your presentation went good. Laila, your project partner asked you out on a coffee. You had a great time. You are on cloud nine and very excited.", "nt7" : [90,90,90,90,90,90,90]}, 
+    "2059" : {"status" : "Your day was pretty nice today. You need to call your parents and greet them, for they have always supported you in who you become.", "nt7" : [50,50,50,50,50,50,50]} 
+
+}

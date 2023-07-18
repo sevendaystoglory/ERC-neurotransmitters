@@ -11,6 +11,32 @@ functions = [
                         },
                     },
                 },
+            },
+            {
+                "name": "no_formal",
+                "description": "When the response is in a formal tone. For eg- 'How can I help you today?'",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "query": {
+                            "type": "string",
+                            "description": "The user query",
+                        },
+                    },
+                },
+            },
+            {
+                "name": "fetch_routine",
+                "description": "need to know the routine/ plans of the person. For eg- 'What are your plans for today', 'You want to come?'",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "response": {
+                            "type": "string",
+                            "description": "response",
+                        },
+                    },
+                },
             }
             
         ]
