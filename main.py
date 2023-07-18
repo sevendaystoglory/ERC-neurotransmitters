@@ -1,8 +1,10 @@
 import openai
+import json
 
 openai.api_key = "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"
 from my_functions import inject_oxytocin, inject_endorphin
 from measure.measure_dopamine import measure_dopamine
+from tools import *
 from measure.measure_endorphin import measure_endorphin
 from measure.measure_oxytocin import measure_oxytocin
 from measure.measure_adrenaline import measure_adrenaline
@@ -27,13 +29,14 @@ def run_conversation(nt4_check, nt4):
         chat_memory.append(message)
         
         # chat_organic_memory[0]['content'] = chat_organic_memory [0]['content'] + ("\n" + "User : " + user_message)
-        temp_memory[-1]['content'] = temp_memory [-1]['content'] + ("\n" + "Human: " + user_message)
+        temp_memory1[-1]['content'] = temp_memory1 [-1]['content'] + ("\n" + "Human: " + user_message)
+        temp_memory2[-1]['content'] = temp_memory2 [-1]['content'] + ("\n" + "Human: " + user_message)
         # emotional_temp_memory[-1]['content'] = emotional_temp_memory [-1]['content'] + ("\n" + "Human: " + user_message)
         memory.append(message)
         print("\nmemory: ", memory)
         print("\nchat memory: ", chat_memory)
         # Step 1: send the conversation and available functions to
-        user_context= generate_context(temp_memory)
+        user_context= generate_context(temp_memory1)
         dopamine_level=measure_dopamine(user_context["choices"][0]["message"]['content']+user_message)
         endorphin_level=measure_endorphin(user_context["choices"][0]["message"]['content']+user_message)
         oxytocin_level=measure_oxytocin(user_context["choices"][0]["message"]['content']+user_message)
@@ -47,8 +50,11 @@ def run_conversation(nt4_check, nt4):
        
         #ERC 2 response============================================================================
 
-        print("Temporal memory: ",temp_memory)
-        print("ERC2 response", response_ERC2(nt4, temp_memory)['choices'][0]['message']['content'])
+        print("Temporal memory: ",temp_memory1)
+        ERC2_response = response_ERC2(nt4, temp_memory2)['choices'][0]['message']['content']
+        print("ERC2 response", ERC2_response)
+        ERC2_response = string_to_dict(ERC2_response)
+        temp_memory2[-1]['content'] = temp_memory2 [-1]['content'] + ("\n" + "Juan : " + ERC2_response['response_1'] + "\n" + ERC2_response['response_2'] + "\n" + ERC2_response['response_3'] + "\n" + ERC2_response['response_4']) 
         
         #Ai response================================================================================
 
@@ -114,7 +120,7 @@ def run_conversation(nt4_check, nt4):
             "content": response_content,
         })
         # chat_organic_memory[0]['content'] = chat_organic_memory [0]['content'] + ("\n" + "Juan : " + response_content)
-        temp_memory[-1]['content'] = temp_memory [-1]['content'] + ("\n" + "Juan : " + response_content)
+        temp_memory1[-1]['content'] = temp_memory1 [-1]['content'] + ("\n" + "Juan : " + response_content)
         # emotional_temp_memory[-1]['content'] = emotional_temp_memory [-1]['content'] + ("\n" + "Juan : " + response_content)
         # em10.update_emotions(emotional_temp_memory)
         # print("Emotional Array = ", em10.array)

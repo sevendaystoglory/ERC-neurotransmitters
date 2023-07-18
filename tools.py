@@ -13,3 +13,10 @@ def normalize(num):
 def set_temp(dopamine):
     return(dopamine/100)    
 
+import ast
+
+def string_to_dict(input_string):
+    # Safely evaluate the string as a dictionary
+    result_dict = ast.literal_eval(input_string)
+    return result_dict
+
