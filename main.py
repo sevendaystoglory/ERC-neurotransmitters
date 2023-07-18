@@ -18,7 +18,6 @@ from model import model
 
 nt4_check = None
 # em10 = Emotions()
-nt4=Neurotransmitter()
 
 def run_conversation(nt4_check, nt4):
     user_message = input("User: ")
@@ -137,6 +136,6 @@ def run_conversation(nt4_check, nt4):
             print("/UNKNOWN COMMAND")
 
             
-
+nt4=Neurotransmitter()
 while True:
     run_conversation(nt4_check, nt4)
