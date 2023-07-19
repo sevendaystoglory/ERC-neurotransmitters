@@ -17,6 +17,10 @@ import ast
 
 def string_to_dict(input_string):
     # Safely evaluate the string as a dictionary
-    result_dict = ast.literal_eval(input_string)
-    return result_dict
+    try:
+        result_dict = ast.literal_eval(input_string)
+        return result_dict
+    except:
+        print("ERROR, pls type again.")
+        return ({"reply_line_1" : 'DECOMMISIONED', "reply_line_2" : 'DECOMMISIONED', "reply_line_3" : 'DECOMMISIONED', "reply_line_4" : 'DECOMMISIONED'})
 

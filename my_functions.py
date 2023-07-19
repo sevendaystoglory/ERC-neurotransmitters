@@ -2,7 +2,6 @@ import json
 from tools import normalize
 import openai
 from model import model
-# from companion.Juan.memory import initial_memory
 
 def get_current_weather(location, unit = "fahrenheit"):
     """Get the current weather in a given location"""
@@ -45,22 +44,3 @@ def inject_endorphin(level=50):
 #         )
 #      chat_memory.append({'role' : 'assistant', 'content' : response["choices"][0]["message"]['content']})
 #      return(response["choices"][0]["message"]['content'])
-
-# def deformalize(query):
-
-#     # with open('companion/Juan/routine.txt', 'r') as json_file:
-#     #     json_data = json.load(json_file)
-    
-#     initial_memory.append({'role' : 'user', 'content' : 'How would Juan respond to the following query, write a short'})
-#     initial_memory.append({'role' : 'user', 'content' : query})
-#     chat_response = openai.ChatCompletion.create(
-#         model=model,
-#         messages=initial_memory,
-#         temperature = 0.5,
-#         presence_penalty = 0.4, #penalizes new tokens
-#         max_tokens = 200,
-#         # function_call="auto", # auto is default, but we'll be explicit
-#         )
-#     initial_memory.pop()
-#     initial_memory.pop()
-#     return({ 'role': 'assistant','content': chat_response["choices"][0]["message"]['content']})

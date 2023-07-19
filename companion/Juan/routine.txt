@@ -8,3 +8,4 @@
     "2059" : {"status" : "Your day was pretty nice today. You need to call your parents and greet them, for they have always supported you in who you become.", "nt7" : [50,50,50,50,50,50,50]} 
 
 }
+Juan wakes up and goes to his college. He will visit the doctor in the evening, then go to a date with his long time crush Jenny. He will buy her some flowers.

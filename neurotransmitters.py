@@ -1,6 +1,6 @@
 class Neurotransmitter:
-    def __init__(self):
-        self.array = [30,30,30,30]
+    def __init__(self,nt1=80, nt2=70, nt3=64, nt4=30):
+        self.array = [nt1,nt2,nt3,nt4]
         self.name_to_position = {
             'oxytocin': 0,
             'endorphin': 1,
