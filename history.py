@@ -8,7 +8,7 @@ def history():
     dir_name = 'ERC-neurotransmitters\companion\Juan\chats'
     files = os.listdir(dir_name)
     txt_files = [f for f in files if f.endswith('.txt')]
-    recency = ["yesterday", "early today" , "right now"]
+    recency = ["a month ago", "a week ago" , "yesterday" , "today" , "today" , "today" ,"today" , "today"]
     pointer = 0
     for file_name in txt_files:
         file_path = os.path.join(dir_name, file_name)

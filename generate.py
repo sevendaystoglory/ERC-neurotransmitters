@@ -41,7 +41,7 @@ def  response_ERC3(synopsis, temp_memory, nt4, future_plans, relevant_history):
      sample_response = "{'timestamp' : '1334', 'urgency/importance' : 'not urgent, informal' , 'tone' : 'low, disheartened' , 'reply_line_1' : 'I don't think so' , 'reply_line_2' : 'It wouldn't be possible today' , 'reply_line_3' : ' '} | 1334: Kevin: I don't think so \n It wouldn't be possible today"
      query.append({'role' : 'assistant', 'content' : sample_response})
      query.append({'role' : 'user', 'content' : "Very well captured! You got the mood right, the time stamp of 1334 which is about half an hour later indicates that Kevin is not in a mood to chat"})
-     query.append({'role' : 'user', 'content' : "Here is another one. Do this carefully. Make sure you get the mood right and give proper reply to the human who is communicating with Juan. If it is a decision, properly keep in mind the future plans and the relevant history."})
+     query.append({'role' : 'user', 'content' : "Here is another one. Do this carefully. Make sure you get the mood right and give proper reply to the human who is communicating with Juan. If it is a decision, properly keep in mind the future plans and the relevant history. Speaker is Juan."})
      query.append({'role' : 'assistant', 'content' : 'Sure. Please share the information.'})
 
      
@@ -61,7 +61,7 @@ def  response_ERC3(synopsis, temp_memory, nt4, future_plans, relevant_history):
      print("ERC3 response", response['choices'][0]['message']['content'], "\n")
      dict_response = retrieve_response(response['choices'][0]['message']['content'])
      temp_memory[-1]['content'] = temp_memory[-1]['content'] + ( dict_response + " | ") 
-     return(response['choices'][0]['message']['content'])
+     return(dict_response)
 
 def response_ERC2(nt4, temp_memory):
     chats = temp_memory[-1]['content']
@@ -70,7 +70,7 @@ def response_ERC2(nt4, temp_memory):
     nt_sample_angry = "Juan is an EXTREMELY MOODY PERSON with an oxytocin level of " + "0" + " and endorphin level of " + "20" + " and dopamine level of " + "20" + "and adrenaline level of " + "90" + " where the level 0 indicates no intensity and 100 indicates full intensity. Oxytocin, known as the social bonding 'love 'hormone, leads to EMPATHETIC, COMPASSIONATE, and UNDERSTANDING messages. It could encourage DEEPER communication, as well as AFFECTIONATE language. Oxytocin's stress-reducing properties might result in CALMER, COMFORTING language.\n Endorphins, natural painkillers linked to pleasure and well-being. They can result in more positive and upbeat language use, demonstrating an IMPROVED mood. High endorphin levels may INCREASED conversation ENERGY and ENTHUSIASM,REDUCE STRESS, and potentially stimulate more CREATIVE or IMAGINATIVE dialogue.\n Dopamine, a neurotransmitter associated with reward, MOTIVATION, and MOOD, can influence text messaging. High dopamine levels may lead to CREATIVE, and RISKY messages, reflecting increased motivation, JOY, and creativity. Low dopamine levels could result in less engaged, and more NEGATIVE messaging. Additionally, extremely high dopamine levels can lead to impulsivity and addiction. Adrenaline, a hormone associated with STRESS, EXCITEMENT, or DANGER, can significantly impact a user's chat conversations. High adrenaline levels heighten EMOTIONS, resulting in more passionate or intense exchanges. For example, a user might use more EXCLAMATION MARKS, CAPITAL letters, or EMOTIONALLY-CHARGED language. Adrenaline can concentrate the focus on perceived essential tasks, possibly creating more FOCUSSED responses.It may enhance memory ATTENTION , enabling the user to RECALL key parts of the conversation more VIVIDLY. However, heightened arousal might increase the propensity for mistakes, like TYPING ERRORS or RUSHED JUDGEMENTS. less TACTFUL language."
     nt_sample_high = "Juan is an EXTREMELY MOODY PERSON with an oxytocin level of " + "60" + " and endorphin level of " + "80" + " and dopamine level of " + "50" + "and adrenaline level of " + "60" + " where the level 0 indicates no intensity and 100 indicates full intensity. Oxytocin, known as the social bonding 'love 'hormone, leads to EMPATHETIC, COMPASSIONATE, and UNDERSTANDING messages. It could encourage DEEPER communication, as well as AFFECTIONATE language. Oxytocin's stress-reducing properties might result in CALMER, COMFORTING language.\n Endorphins, natural painkillers linked to pleasure and well-being. They can result in more positive and upbeat language use, demonstrating an IMPROVED mood. High endorphin levels may INCREASED conversation ENERGY and ENTHUSIASM,REDUCE STRESS, and potentially stimulate more CREATIVE or IMAGINATIVE dialogue.\n Dopamine, a neurotransmitter associated with reward, MOTIVATION, and MOOD, can influence text messaging. High dopamine levels may lead to CREATIVE, and RISKY messages, reflecting increased motivation, JOY, and creativity. Low dopamine levels could result in less engaged, and more NEGATIVE messaging. Additionally, extremely high dopamine levels can lead to impulsivity and addiction. Adrenaline, a hormone associated with STRESS, EXCITEMENT, or DANGER, can significantly impact a user's chat conversations. High adrenaline levels heighten EMOTIONS, resulting in more passionate or intense exchanges. For example, a user might use more EXCLAMATION MARKS, CAPITAL letters, or EMOTIONALLY-CHARGED language. Adrenaline can concentrate the focus on perceived essential tasks, possibly creating more FOCUSSED responses.It may enhance memory ATTENTION , enabling the user to RECALL key parts of the conversation more VIVIDLY. However, heightened arousal might increase the propensity for mistakes, like TYPING ERRORS or RUSHED JUDGEMENTS. less TACTFUL language."
 
-    general_format = str({"formality": 'level of formality', "typos/grammar" : 'intensity of typos' , "attentiveness" : "Juan's attentivess/ interest in the conversation", "tone and language" : "Juan's tone" , "number of lines in Juan's responses" : 'an integer between 1 and 4 (inclusive) denoting the number of responses' , "average length of each response" : 'an integer marking the upper length of each response. SHOULD NOT BE GREATER THAN 30 WORDS!' , "reply_line_1" : "a sample Juan's first line of response based on all previous data." , "reply_line_2" : "next line of Juan's response" , "reply_line_3" : "next line of Juan's response" , "reply_line_4" : "next line of Juan's response"}) + str(" | Speaker: reply_line_1 \n reply_line_2 \n reply_line_3 \n reply_line_4")
+    general_format = str({"formality": 'level of formality', "typos/grammar" : 'intensity of typos' , "attentiveness" : "Juan's attentivess/ interest in the conversation", "tone and language" : "Juan's tone" , "number of lines in Juan's responses" : 'an integer between 1 and 4 (inclusive) denoting the number of responses' , "average length of each response" : 'an integer marking the upper length of each response. SHOULD NOT BE GREATER THAN 30 WORDS!' , "reply_line_1" : "a sample Juan's first line of response based on all previous data." , "reply_line_2" : "next line of Juan's response" , "reply_line_3" : "next line of Juan's response" , "reply_line_4" : "next line of Juan's response"}) + str(" | Juan: reply_line_1 \n reply_line_2 \n reply_line_3 \n reply_line_4")
     
     query = [{'role' : 'user', 'content': 'I will give you three types of information. 1. A brief on the character of Juan. 2. His current mood depending on the levels of oxytocin, endorphin, dopamine and adrenaline in his system. EXTREME LEVELS of neurotransmitters should determine the the output HEAVILY. 3. His chat conversations with a human. You will then output a python dictionary in the following format : ' + str(general_format) + "Make sure the values of the key 'replies' are going to be replies that Juan will type, consistent with the typos/grammar, and MAKE IT AWARE OF FACTS. The reply should not assume information like hallucinate that Juan knows a certain person or event. Strictly stick to information. AVOID BEING REPETITIVE WITH REPLIES" }]
     query.append({'role' : 'assistant', "content" : 'Sure!'})
@@ -109,7 +109,7 @@ def response_ERC2(nt4, temp_memory):
     print("ERC2 response", response['choices'][0]['message']['content'], "\n")
     dict_response = retrieve_response(response['choices'][0]['message']['content'])
     temp_memory[-1]['content'] = temp_memory[-1]['content'] + ( dict_response + " | ") 
-    return(response['choices'][0]['message']['content'])
+    return(dict_response)
 
 def response_ERC1(memory, chat_memory,):
       response = openai.ChatCompletion.create(
@@ -136,19 +136,12 @@ def response_ERC1(memory, chat_memory,):
             "content": response_content,
         })
       
+      return(response_content) 
       
-def affector(dict, nt_array):
-        dict_format = {'formality': 'level of formality', 'typos/grammar' : 'intensity of typos' , 'attentiveness' : "Juan's attentivess/ interest in the conversation", "tone and language" : "Juan's tone" , "number of lines in Juan's responses" : 'an integer between 1 and 4 (inclusive) denoting the number of responses' , "average length of each response" : 'an integer marking the upper length of each response. SHOULD NOT BE GREATER THAN 30 WORDS!' , 'reply_line_1' : "a sample Juan's first line of response based on all previous data." , "reply_line_2" : "next line of Juan's response" , "reply_line_3" : "next line of Juan's response" , "reply_line_4" : "next line of Juan's response"}
-        query = [{'role' : 'user', 'content' : "I am giving you two types of informations. First one is a dictionary which is self explanatory. I want you to change the values of all of the following keys ('formality', 'typos/grammar', 'attentiveness', 'tone and language' ) and then apply those to all the response values (reply_line_1, reply_line_2, reply_line_3, reply_line_4) "}]
-        response = openai.ChatCompletion.create(
-        model=model,
-        messages= query,
-        temperature = 0.3,
-        )
-
+      
 def updated_future_plan(temp_memory,nt4):
      chats = temp_memory[-1]['content']
-     query = [{'role' : 'user', 'content' : "I am giving you FOUR types of informations. 1. A basic character description of Juan. 2. His future plans. Some are long term, some are decided at the start of the day. With their level of importance to Juan in paranthesis. 3. A chat conversation with another person labelled Human, in the chats. Also there are timestamp for each of the messages, so you can judge the hour of the day at which the chat is progressing currently. 4. Levels of Neurotransmitters in Juan's system which will determine his mood and thus a change of plans would take place accordingly.\nYOUR TASK IS TO UPDATE THE FUTURE PLAN DEPENDING ON THE MOOD of Juan. Please see that his day should not get overloaded. IF THERE IS NO CHANGE RETURN THE FUTURE PLAN LIST AS IT IS. IF THERE IS A SLIGHT CHANGE, EDIT THAT PART ONLY AND RETURN THE WHOLE PLAN, WITH IMPORTANCE LEVEL IN PARANTHESIS. ALSO, PLEASE REFRAIN FROM MAKING CHANGES UNLESS VERY IMPORTANT FOR JUAN. \n OUTPUT FORMAT : {'reasoning' : 'proper reasoning of your change, if any', 'updated future plan' : 'your updated future plan'}. Are you ready?"}]
+     query = [{'role' : 'user', 'content' : "I am giving you FOUR types of informations. 1. A basic character description of Juan. 2. His future plans. Some are long term, some are decided at the start of the day. With their level of importance to Juan in paranthesis. 3. A chat conversation with another person labelled Human, in the chats. Also there are timestamp for each of the messages, so you can judge the hour of the day at which the chat is progressing currently. 4. Levels of Neurotransmitters in Juan's system which will determine his mood and thus a change of plans would take place accordingly.\nYOUR TASK IS TO UPDATE THE FUTURE PLAN DEPENDING ON THE MOOD of Juan. Please see that his day should not get overloaded. IF THERE IS NO CHANGE RETURN THE FUTURE PLAN LIST AS IT IS. IF THERE IS A SLIGHT CHANGE, EDIT THAT PART ONLY AND RETURN THE WHOLE PLAN, WITH IMPORTANCE LEVEL IN PARANTHESIS. ALSO, PLEASE REFRAIN FROM MAKING CHANGES UNLESS VERY IMPORTANT FOR JUAN. \n OUTPUT FORMAT : proper reasoning of your change, if any | your updated future plan. \n ARE YOU READY?"}]
      query.append({'role' : 'assistant', 'content' : "Sure! Please give me the information"})
      #samples
      sample_preamble = "Juan is a cool kid from Mexico. He is very social and has a lot of friends. He can be a teaser sometimes but overall is popular. He is comitted to swimming classes daily and is also studying in 1oth grade in his school. he does'nt like studies."
@@ -157,7 +150,7 @@ def updated_future_plan(temp_memory,nt4):
      sample_nt4 = "Juan has an oxytocin level of " + "60" + " and endorphin level of " + "40" + " and dopamine level of " + "70" + "and adrenaline level of " + "10" + " ,where the level 0 indicates no intensity and 100 indicates full intensity. Oxytocin, known as the social bonding 'love 'hormone, leads to EMPATHETIC, COMPASSIONATE, and UNDERSTANDING mood. It could encourage DEEPER communication, as well as AFFECTIONATE language. Oxytocin's stress-reducing properties might result in CALMER, COMFORTING language.\n Endorphins, natural painkillers linked to pleasure and well-being. They can result in more positive and upbeat moods, demonstrating an IMPROVED mood. High endorphin levels may INCREASED conversation ENERGY and ENTHUSIASM,REDUCE STRESS, and potentially stimulate more CREATIVE or IMAGINATIVE dialogue.\n Dopamine, a neurotransmitter associated with reward, MOTIVATION, and MOOD, can influence text messaging. High dopamine levels may lead to CREATIVE, and RISKY mood, reflecting increased motivation, JOY, and creativity. Low dopamine levels could result in less engaged, and more NEGATIVE messaging. Additionally, extremely high dopamine levels can lead to impulsivity and addiction. Adrenaline, a hormone associated with STRESS, EXCITEMENT, or DANGER, can significantly impact a user's chat conversations. High adrenaline levels heighten EMOTIONS, resulting in more passionate or intense exchanges. For example, a user might use more EXCLAMATION MARKS, CAPITAL letters, or EMOTIONALLY-CHARGED language. Adrenaline can concentrate the focus on perceived essential tasks, possibly creating more FOCUSSED responses.It may enhance memory ATTENTION , enabling the user to RECALL key parts of the conversation more VIVIDLY. However, heightened arousal might increase the propensity for mistakes, like TYPING ERRORS or RUSHED JUDGEMENTS. less TACTFUL language."
      sample_case = "1. " + sample_preamble + " 2. " + sample_future_plan + " 3. " + sample_chat + "4. "  + sample_nt4
      query.append({'role' : 'user', 'content' : sample_case})
-     query.append({'role' : 'assistant', 'content': "{'reasoning' : 'Juan's mood is great right now, as inferred from his increased oxytocin and dopamine levels', 'updated future plan' : 'Juan will call his PE teacher this morning to tell about his scholarship (Maybe). Juan has a swimming class this evening (Critical). He will fully finish his readings. (Important) . He may go to Erica's party (maybe)'}"})
+     query.append({'role' : 'assistant', 'content': "Juan's mood is great right now, as inferred from his increased oxytocin and dopamine levels. | Juan will call his PE teacher this morning to tell about his scholarship (Maybe). Juan has a swimming class this evening (Critical). He will fully finish his readings. (Important) . He may go to Erica's party (maybe)'"})
      query.append({'role' : 'user', 'content' : "Incredible! You did a great job! You captured current mood of Juan and his personality. Also, mad the change with some uncertainty that he may not go to Erica's as he also has other commitments"})
      query.append({'role' : 'assistant', 'content' : "Thank You!"})
      query.append({'role' : 'user', 'content' : "Let's try another. Do this now."})
@@ -167,7 +160,7 @@ def updated_future_plan(temp_memory,nt4):
      sample_nt4 = "Juan has an oxytocin level of " + "50" + " and endorphin level of " + "20" + " and dopamine level of " + "20" + "and adrenaline level of " + "70" + " ,where the level 0 indicates no intensity and 100 indicates full intensity. Oxytocin, known as the social bonding 'love 'hormone, leads to EMPATHETIC, COMPASSIONATE, and UNDERSTANDING mood. It could encourage DEEPER communication, as well as AFFECTIONATE language. Oxytocin's stress-reducing properties might result in CALMER, COMFORTING language.\n Endorphins, natural painkillers linked to pleasure and well-being. They can result in more positive and upbeat moods, demonstrating an IMPROVED mood. High endorphin levels may INCREASED conversation ENERGY and ENTHUSIASM,REDUCE STRESS, and potentially stimulate more CREATIVE or IMAGINATIVE dialogue.\n Dopamine, a neurotransmitter associated with reward, MOTIVATION, and MOOD, can influence text messaging. High dopamine levels may lead to CREATIVE, and RISKY mood, reflecting increased motivation, JOY, and creativity. Low dopamine levels could result in less engaged, and more NEGATIVE messaging. Additionally, extremely high dopamine levels can lead to impulsivity and addiction. Adrenaline, a hormone associated with STRESS, EXCITEMENT, or DANGER, can significantly impact a user's chat conversations. High adrenaline levels heighten EMOTIONS, resulting in more passionate or intense exchanges. For example, a user might use more EXCLAMATION MARKS, CAPITAL letters, or EMOTIONALLY-CHARGED language. Adrenaline can concentrate the focus on perceived essential tasks, possibly creating more FOCUSSED responses.It may enhance memory ATTENTION , enabling the user to RECALL key parts of the conversation more VIVIDLY. However, heightened arousal might increase the propensity for mistakes, like TYPING ERRORS or RUSHED JUDGEMENTS. less TACTFUL language."
      sample_case = "1. " + sample_preamble + " 2. " + sample_future_plan + " 3. " + sample_chat + "4. "  + sample_nt4
      query.append({'role' : 'user', 'content' : sample_case})
-     query.append({'role' : 'assistant', 'content': "{'reasoning' : 'No change as Juan has high oxytocin and Adrenaline depicting he is nervous because of his date. He is not in a mood to go to the game.', 'updated future plan' : Juan will visit the doctor in the evening (Important). Then go on a date with his long-time crush Jenny (Critical). He will buy her some flowers (Not much important). He will also meet Abdul for a coffee (Maybe). He will spend some time exploring art galleries in the city and maybe even create some art himself. (maybe)}"})
+     query.append({'role' : 'assistant', 'content': "No change as Juan has high oxytocin and Adrenaline depicting he is nervous because of his date. He is not in a mood to go to the game. | Juan will visit the doctor in the evening (Important). Then go on a date with his long-time crush Jenny (Critical). He will buy her some flowers (Not much important). He will also meet Abdul for a coffee (Maybe). He will spend some time exploring art galleries in the city and maybe even create some art himself. (maybe)}"})
      query.append({'role' : 'user', 'content' : "Incredible! You did a great job!"})
      query.append({'role' : 'assistant', 'content' : "Thank You!"})
      query.append({'role' : 'user', 'content' : "Let's try another. Do this now."})
@@ -188,18 +181,17 @@ def updated_future_plan(temp_memory,nt4):
         temperature = 0.3,
         )
      
-
+     print(response['choices'][0]['message']['content'], "future plan and reasoning")
      try:
-        result_dict = ast.literal_eval(response['choices'][0]['message']['content'])
+        reason = response['choices'][0]['message']['content'].split('|')[0].strip()
+        future_plan = response['choices'][0]['message']['content'].split('|')[1].strip()
      except:
-        result_dict = {'reasoning' : 'ast_ERROR', 'updated future plan' : future_plan}
-     
+        reason = 'no change in future plan. ERR'
+
+     result_dict = {'reasoning' : reason, 'updated future plan' : future_plan}
      if 'updated future plan' in  result_dict:
           with open('ERC-neurotransmitters/companion/Juan/future_plan.txt', 'w') as file:
             file.write(result_dict['updated future plan'])
-     else:
-          print("dick Error")
-
 
      return(result_dict)
 
@@ -229,9 +221,9 @@ def retreive(temp_memory, memory_stream):
     return(response['choices'][0]['message']['content'])
 
 
-def NTV(memory_stream):  
+def NTV(memory_stream, chats):  
    memory_object = memory_stream.return_array()[-1]
-   synopsis = memory_object.get_synopsis()
+   synopsis = memory_object.get_synopsis() + "FOLLOWING IS A CHAT OF JUAN WITH ANOTHER PERSON"+chats 
    dopamine_level=measure_dopamine(synopsis)
    endorphin_level=measure_endorphin(synopsis)
    oxytocin_level=measure_oxytocin(synopsis)

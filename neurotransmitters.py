@@ -9,9 +9,9 @@ class Neurotransmitter:
         }
         self.position_to_name = {v: k for k, v in self.name_to_position.items()}  # reverse map
         self.description_to_value = {
-            'high': 90,
+            'high': 200,
             'medium': 50,
-            'low': 10
+            'low': 0
         }
         self.changed = [False]*4  # Track whether each neurotransmitter has been changed
 
