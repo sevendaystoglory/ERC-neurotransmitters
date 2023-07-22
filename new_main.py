@@ -20,6 +20,19 @@ def write_to_memory(msg=''): #no LLM
         temp_memory3[-1]['content'] = temp_memory3 [-1]['content'] + ("\n"+ str(time.strftime("%H%M"))+ ": " + "Human: " + msg + " | ") #DONE
         
 
+def restore_memory():
+    temp_memory1[-1]['content'] = ''
+    temp_memory2[-1]['content'] = ''
+    temp_memory3[-1]['content'] = ''
+    while(len(memory)!=12):
+        memory.pop()
+    while(len(chat_memory)!=1):
+        chat_memory.pop()
+    with open('ERC-neurotransmitters/new_file_path.txt', 'w') as file:
+            file.write('')
+            
+    
+
 def get_user_ntv(msg=''): #yes LLM
     chat_synopsis3 = generate_synopsis(temp_memory3) #DONE
     dopamine_level_user=measure_dopamine(chat_synopsis3+ "CHAT MESSAGE FROM PERSON:" +msg)

@@ -5,11 +5,15 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)  # This will enable CORS for all routes
 
-nt4=Neurotransmitter(10,40,30,50)
+nt4=Neurotransmitter(10,20,30,20)
+
+@app.route('/refresh', methods=['POST'])
+def refresh():
+    restore_memory()
+    return '', 200
 @app.route('/ntv', methods=['POST'])
 def getntv():
     response = {'nt1' : nt4.array[0] , 'nt2' : nt4.array[1] , 'nt3' : nt4.array[2] , 'nt4' : nt4.array[3]}
-    print ( "LDOAA\n\n\n ", response)
     return(jsonify(response))
 @app.route('/writememory', methods=['POST'])
 def writememory():
