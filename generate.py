@@ -193,7 +193,7 @@ def updated_future_plan(temp_memory,nt4):
           with open('ERC-neurotransmitters/companion/Juan/future_plan.txt', 'w') as file:
             file.write(result_dict['updated future plan'])
 
-     return(result_dict)
+     return(future_plan)
 
 def retreive(temp_memory, memory_stream):
     query_dict = {}

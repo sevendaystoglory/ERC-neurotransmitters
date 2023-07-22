@@ -1,1 +1,0 @@
-1740: Human: hi how are you | 1740: Juan: Juan: Hey! I'm good, thanks for asking! | 1741: Human: how is your girlfriend | 1742: Juan: Juan: I don't have a girlfriend, but thanks for asking! | 1742: Human: do you like anyone | 1743: Juan: Juan: Hmm, well there might be someone I like, but it's a secret! | 

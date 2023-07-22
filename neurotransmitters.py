@@ -2,14 +2,14 @@ class Neurotransmitter:
     def __init__(self,nt1=80, nt2=70, nt3=64, nt4=30):
         self.array = [nt1,nt2,nt3,nt4]
         self.name_to_position = {
-            'oxytocin': 0,
+            'dopamine': 0,
             'endorphin': 1,
-            'dopamine': 2,
+            'oxytocin': 2,
             'adrenaline': 3
         }
         self.position_to_name = {v: k for k, v in self.name_to_position.items()}  # reverse map
         self.description_to_value = {
-            'high': 200,
+            'high': 100,
             'medium': 50,
             'low': 0
         }

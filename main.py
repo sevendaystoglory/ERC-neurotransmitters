@@ -33,8 +33,8 @@ def run_conversation(new_file_path, nt4, msg=''):
         memory.append(message)
         # print("\nmemory: ", memory)
         # print("\nchat memory: ", chat_memory)
-        chat_synopsis1 = generate_synopsis(temp_memory1) #DONE
-        chat_synopsis2 = generate_synopsis(temp_memory2) #DONE
+        # chat_synopsis1 = generate_synopsis(temp_memory1) #DONE
+        # chat_synopsis2 = generate_synopsis(temp_memory2) #DONE
         chat_synopsis3 = generate_synopsis(temp_memory3) #DONE
         dopamine_level_user=measure_dopamine(chat_synopsis3+user_message)
         endorphin_level_user=measure_endorphin(chat_synopsis3+user_message)
@@ -45,9 +45,9 @@ def run_conversation(new_file_path, nt4, msg=''):
         # print("\noxytocin_level: ", oxytocin_level )
         # print("\nadrenaline_level: ", adrenaline_level )
 
-        print("\n===============CHAT_SYNOPSIS (ERC1_replies)========================>", chat_synopsis1, '\n')
-        print("\n===============CHAT_SYNOPSIS (ERC2_replies)========================>", chat_synopsis2, '\n')
-        print("\n===============CHAT_SYNOPSIS (ERC3_replies)========================>", chat_synopsis3, '\n')
+        # print("\n===============CHAT_SYNOPSIS (ERC1_replies)========================>", chat_synopsis1, '\n')
+        # print("\n===============CHAT_SYNOPSIS (ERC2_replies)========================>", chat_synopsis2, '\n')
+        # print("\n===============CHAT_SYNOPSIS (ERC3_replies)========================>", chat_synopsis3, '\n')
         # memory.append({'role':'system', 'content': chat_synopsis["choices"][0]["message"]['content'] + "The next response follows from this information."})
 
         # with open('ERC-neurotransmitters/companion/Juan/future_plan.txt', 'r') as file:
@@ -65,13 +65,13 @@ def run_conversation(new_file_path, nt4, msg=''):
         chat_response_ERC2 = response_ERC2(nt4, temp_memory2)
         print(temp_memory2[-1]['content'])
         #ERC 3 response================================================================================
-        with open('ERC-neurotransmitters/companion/Juan/future_plan.txt', 'r') as file:
-            future_plan = file.read()
-            print("FUTURE PLAN BEFORE:", future_plan , "\n")
+        # with open('ERC-neurotransmitters/companion/Juan/future_plan.txt', 'r') as file:
+        #     future_plan = file.read()
+        #     print("FUTURE PLAN BEFORE:", future_plan , "\n")
         plan = updated_future_plan(temp_memory3 ,nt4)
-        with open('ERC-neurotransmitters/companion/Juan/future_plan.txt', 'r') as file:
-            future_plan = file.read()
-            print("FUTURE PLAN UPDATED:", future_plan, "\n")
+        # with open('ERC-neurotransmitters/companion/Juan/future_plan.txt', 'r') as file:
+        #     future_plan = file.read()
+        #     print("FUTURE PLAN UPDATED:", future_plan, "\n")
 
         with open('ERC-neurotransmitters/companion/Juan/future_plan.txt', 'r') as file:
             future_plan = file.read()
@@ -114,7 +114,7 @@ def run_conversation(new_file_path, nt4, msg=''):
 
     num_mem_objects = len(history_stream.return_array())
     return([new_file_path, chat_response_ERC1, chat_response_ERC2, chat_response_ERC3, plan, dopamine_level_user, endorphin_level_user, oxytocin_level_user, adrenaline_level_user, ntv, num_mem_objects, status])
-            
+
 nt4=Neurotransmitter(40,50,60,20)
 def RUN(x):
     try:
