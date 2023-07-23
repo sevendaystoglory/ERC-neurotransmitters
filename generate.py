@@ -60,7 +60,7 @@ def  response_ERC3(synopsis, temp_memory, nt4, future_plans, relevant_history):
 
      print("ERC3 response", response['choices'][0]['message']['content'], "\n")
      dict_response = retrieve_response(response['choices'][0]['message']['content'])
-     temp_memory[-1]['content'] = temp_memory[-1]['content'] + ( dict_response + " | ") 
+     temp_memory[-1]['content'] = temp_memory[-1]['content'] + str(( dict_response + " | ")) 
      return(dict_response)
 
 def response_ERC2(nt4, temp_memory):

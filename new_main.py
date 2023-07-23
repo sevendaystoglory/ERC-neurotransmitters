@@ -1,14 +1,9 @@
 from tools import *
-from companion.Juan.memory import *
 from generate import *
-from neurotransmitters import Neurotransmitter
-from history import history
+
 import time
-nt4_check = None
 
-history_stream = history()
-
-def write_to_memory(msg=''): #no LLM
+def write_to_memory( memory, temp_memory1, temp_memory2, temp_memory3, msg=''): #no LLM
     if msg=='':
         return()
     if not(msg[0].lstrip().startswith('/')):
@@ -20,7 +15,7 @@ def write_to_memory(msg=''): #no LLM
         temp_memory3[-1]['content'] = temp_memory3 [-1]['content'] + ("\n"+ str(time.strftime("%H%M"))+ ": " + "Human: " + msg + " | ") #DONE
         
 
-def restore_memory():
+def restore_memory(temp_memory1, temp_memory2, temp_memory3, memory,chat_memory):
     temp_memory1[-1]['content'] = ''
     temp_memory2[-1]['content'] = ''
     temp_memory3[-1]['content'] = ''
@@ -33,7 +28,7 @@ def restore_memory():
             
     
 
-def get_user_ntv(msg=''): #yes LLM
+def get_user_ntv(temp_memory3, msg=''): #yes LLM
     chat_synopsis3 = generate_synopsis(temp_memory3) #DONE
     dopamine_level_user=measure_dopamine(chat_synopsis3+ "CHAT MESSAGE FROM PERSON:" +msg)
     endorphin_level_user=measure_endorphin(chat_synopsis3+ "CHAT MESSAGE FROM PERSON:" +msg)
@@ -41,11 +36,11 @@ def get_user_ntv(msg=''): #yes LLM
     adrenaline_level_user=measure_adrenaline(chat_synopsis3+ "CHAT MESSAGE FROM PERSON:" +msg)
     return([int(dopamine_level_user),int(endorphin_level_user),int(oxytocin_level_user),int(adrenaline_level_user),chat_synopsis3])
 
-def get_num_mem_objects(): #no LLM
+def get_num_mem_objects(history_stream): #no LLM
     num_mem_objects = len(history_stream.return_array())
     return(num_mem_objects)
 
-def get_status(msg='', nt4 = Neurotransmitter(40,50,60,20)): #yes LLM
+def get_status(nt4, msg=''): #yes LLM
     if msg=='':
         return("EMPTY CHAT")
     
@@ -77,11 +72,11 @@ def get_status(msg='', nt4 = Neurotransmitter(40,50,60,20)): #yes LLM
         return(status)
     
 
-def update_plan(nt4 = Neurotransmitter(40,50,60,20)): #yes LLM
+def update_plan(temp_memory3, nt4): #yes LLM
     plan = updated_future_plan(temp_memory3 ,nt4)
     return(plan)
 
-def ERC1_response(msg=''):
+def ERC1_response(memory, chat_memory, msg=''):
     if msg!='':
          if not(msg[0].lstrip().startswith('/')):   
              #ERC 1 response================================================================================
@@ -93,7 +88,7 @@ def ERC1_response(msg=''):
         return (" ")
     
 
-def ERC2_response(msg='' , nt4=Neurotransmitter(40,50,60,20)):
+def ERC2_response(temp_memory2, nt4, msg=''):
      if msg!='':
         if not(msg[0].lstrip().startswith('/')):
             chat_response_ERC2 = response_ERC2(nt4, temp_memory2)
@@ -104,7 +99,7 @@ def ERC2_response(msg='' , nt4=Neurotransmitter(40,50,60,20)):
      else:
          return(" ")
 
-def ERC3_response(new_file_path=None, msg='', chat_synopsis3=''):
+def ERC3_response(temp_memory3, history_stream,new_file_path=None, msg='', chat_synopsis3=''):
     if msg!='':
         if not(msg[0].lstrip().startswith('/')):
             if new_file_path != None:

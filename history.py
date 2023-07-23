@@ -1,10 +1,8 @@
 from memory_stream_constructor import *
 import os
 
-def history():
+def construct_history():
     memory_stream = MemoryStream()
-
-
     dir_name = 'ERC-neurotransmitters\companion\Juan\chats'
     files = os.listdir(dir_name)
     txt_files = [f for f in files if f.endswith('.txt')]
