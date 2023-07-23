@@ -2,11 +2,11 @@ from tools import *
 from companion.Juan.memory import *
 from generate import *
 from neurotransmitters import Neurotransmitter
-from history import history
+from history import construct_history
 import time
 nt4_check = None
 
-history_stream = history()
+history_stream = construct_history()
 
 def run_conversation(new_file_path, nt4, msg=''):
     [chat_response_ERC1, chat_response_ERC2, chat_response_ERC3, plan, dopamine_level_user, endorphin_level_user, oxytocin_level_user, adrenaline_level_user, ntv, num_mem_objects] = ['','','','','','','','',[0,0,0,0],0]

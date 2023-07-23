@@ -70,7 +70,7 @@ def generate_summary(memory):
     return(response['choices'][0]['message']['content'])
 
 import json
-openai.api_key = "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"
+openai.api_key = "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"
 
 
 

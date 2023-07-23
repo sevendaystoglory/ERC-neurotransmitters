@@ -2,9 +2,9 @@ import openai
 import ast
 from tools import *
 import time
-openai.api_key = "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"
+openai.api_key = "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"
 from model import model, model2
-with open('ERC-neurotransmitters\companion\Juan\preamble.txt', 'r') as file:
+with open('ERC-neurotransmitters/companion/Juan/preamble.txt', 'r') as file:
         preamble = file.read()
 with open('ERC-neurotransmitters/companion/Juan/future_plan.txt', 'r') as file:
         future_plan = file.read()
