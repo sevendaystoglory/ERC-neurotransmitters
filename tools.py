@@ -2,7 +2,10 @@ import os
 import openai
 from model import model
 import json
-openai.api_key = "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"
+from dotenv import load_dotenv
+load_dotenv()
+
+openai.api_key = os.environ["OPENAI_API_KEY"]
 
 def isolate_value(value):
     return(value)
