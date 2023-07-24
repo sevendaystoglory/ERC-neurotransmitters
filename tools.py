@@ -1,6 +1,8 @@
 import os
 import openai
 from model import model
+import json
+openai.api_key = "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"
 
 def isolate_value(value):
     return(value)
@@ -68,12 +70,6 @@ def generate_summary(memory):
     )
     memory.pop()
     return(response['choices'][0]['message']['content'])
-
-import json
-openai.api_key = "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"
-
-
-
 
 def measure_adrenaline(context):
     full_message = [{'role' : 'user' , 'content' : "Adrenaline, a hormone associated with stress, excitement, or danger, can significantly impact a user's chat conversations. High adrenaline levels often quicken cognitive processing, potentially leading to faster responses, like swift replies or interjections. It can heighten emotions, resulting in more passionate or intense exchanges. For example, a user might use more exclamation marks, capital letters, or emotionally-charged language. Adrenaline can concentrate the focus on perceived essential tasks, possibly creating more focused responses. For instance, a user may stick strictly to a topic without deviating. It may enhance memory consolidation, enabling the user to recall key parts of the conversation more vividly. However, heightened arousal might increase the propensity for mistakes, like typing errors or rushed judgments. For example, a user might send messages with more typos or use less tactful language."} , {'role':'user', 'content' : context},{'role':'user', 'content' : 'Predict the level of adrenaline in the system of this person, where level 0 means minimum intensity and level 100 denotes maximum intensity. You must assign a NUMBER depicting the level of adrenaline to this person.'}] 
