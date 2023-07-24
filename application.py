@@ -44,7 +44,7 @@ def num_mem_obj():
     load = data['load']
     if load == 1:
         update(history_stream, construct_history())
-    num = get_num_mem_objects(history_stream)
+    num = RUN(get_num_mem_objects(history_stream))
     response = {'num': num}
     return jsonify(response)
 
@@ -52,13 +52,13 @@ def num_mem_obj():
 def status():
     data = request.get_json()
     message = data['msg']
-    status = get_status(nt4, message)
+    status = RUN(get_status(nt4, message))
     response = {'status': status}
     return jsonify(response)
 
 @application.route('/plan', methods=['POST'])
 def plan():
-    plan = update_plan(temp_memory3, nt4)
+    plan = RUN(update_plan(temp_memory3, nt4))
     response = {'plan': plan}
     return jsonify(response)
 

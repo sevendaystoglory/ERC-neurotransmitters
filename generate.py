@@ -2,7 +2,13 @@ import openai
 import ast
 from tools import *
 import time
-openai.api_key = "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"
+from RUN import RUN
+
+from dotenv import load_dotenv
+load_dotenv()
+
+openai.api_key = os.environ["OPENAI_API_KEY"]
+
 from model import model, model2
 with open('ERC-neurotransmitters/companion/Juan/preamble.txt', 'r') as file:
         preamble = file.read()
@@ -220,13 +226,12 @@ def retreive(temp_memory, memory_stream):
     print("MEMORY ERC3:", query_dict)
     return(response['choices'][0]['message']['content'])
 
-
-def NTV(memory_stream, chats):  
+def NTV(memory_stream, chats, juan_response):  
    memory_object = memory_stream.return_array()[-1]
-   synopsis = memory_object.get_synopsis() + "FOLLOWING IS A CHAT OF JUAN WITH ANOTHER PERSON"+chats 
-   dopamine_level=measure_dopamine(synopsis)
-   endorphin_level=measure_endorphin(synopsis)
-   oxytocin_level=measure_oxytocin(synopsis)
-   adrenaline_level=measure_adrenaline(synopsis)
+   synopsis = memory_object.get_synopsis() + "FOLLOWING IS A CHAT OF JUAN WITH ANOTHER PERSON: "+ chats + "Following this the response that Juan gave to the human: " + juan_response
+   dopamine_level=RUN(measure_dopamine(synopsis))
+   endorphin_level=RUN(measure_endorphin(synopsis))
+   oxytocin_level=RUN(measure_oxytocin(synopsis))
+   adrenaline_level=RUN(measure_adrenaline(synopsis))
    return([dopamine_level, endorphin_level, oxytocin_level, adrenaline_level])
 
