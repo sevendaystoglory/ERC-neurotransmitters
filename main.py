@@ -50,11 +50,11 @@ def run_conversation(new_file_path, nt4, msg=''):
         # print("\n===============CHAT_SYNOPSIS (ERC3_replies)========================>", chat_synopsis3, '\n')
         # memory.append({'role':'system', 'content': chat_synopsis["choices"][0]["message"]['content'] + "The next response follows from this information."})
 
-        # with open('ERC-neurotransmitters/companion/Juan/future_plan.txt', 'r') as file:
+        # with open('companion/Juan/future_plan.txt', 'r') as file:
         #     future_plan = file.read()
         #     print("FUTURE PLAN BEFORE:", future_plan , "\n")
         # plan = updated_future_plan(temp_memory2 ,nt4)
-        # with open('ERC-neurotransmitters/companion/Juan/future_plan.txt', 'r') as file:
+        # with open('companion/Juan/future_plan.txt', 'r') as file:
         #     future_plan = file.read()
         #     print("FUTURE PLAN UPDATED:", future_plan, "\n")
 
@@ -65,15 +65,15 @@ def run_conversation(new_file_path, nt4, msg=''):
         chat_response_ERC2 = response_ERC2(nt4, temp_memory2)
         print(temp_memory2[-1]['content'])
         #ERC 3 response================================================================================
-        # with open('ERC-neurotransmitters/companion/Juan/future_plan.txt', 'r') as file:
+        # with open('companion/Juan/future_plan.txt', 'r') as file:
         #     future_plan = file.read()
         #     print("FUTURE PLAN BEFORE:", future_plan , "\n")
         plan = updated_future_plan(temp_memory3 ,nt4)
-        # with open('ERC-neurotransmitters/companion/Juan/future_plan.txt', 'r') as file:
+        # with open('companion/Juan/future_plan.txt', 'r') as file:
         #     future_plan = file.read()
         #     print("FUTURE PLAN UPDATED:", future_plan, "\n")
 
-        with open('ERC-neurotransmitters/companion/Juan/future_plan.txt', 'r') as file:
+        with open('companion/Juan/future_plan.txt', 'r') as file:
             future_plan = file.read()
             ntv = NTV(history_stream, temp_memory3[-1]['content'])
             chat_response_ERC3 = response_ERC3(chat_synopsis3, temp_memory3, ntv, future_plan, retreive(temp_memory3 , history_stream))
@@ -93,9 +93,9 @@ def run_conversation(new_file_path, nt4, msg=''):
                 new_file_path = None 
                 status = "COMMAND EXECUTED"
             elif(user_message == '/reset future'):
-                with open('ERC-neurotransmitters/companion/Juan/routine.txt', 'r') as file:
+                with open('companion/Juan/routine.txt', 'r') as file:
                     routine = file.read()
-                    with open('ERC-neurotransmitters/companion/Juan/future_plan.txt', 'w') as file:
+                    with open('companion/Juan/future_plan.txt', 'w') as file:
                         file.write(routine)
                 status = "COMMAND EXECUTED"
             else:

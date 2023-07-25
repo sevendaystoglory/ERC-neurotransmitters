@@ -23,7 +23,7 @@ def restore_memory(temp_memory1, temp_memory2, temp_memory3, memory,chat_memory)
         memory.pop()
     while(len(chat_memory)!=1):
         chat_memory.pop()
-    with open('ERC-neurotransmitters/new_file_path.txt', 'w') as file:
+    with open('new_file_path.txt', 'w') as file:
             file.write('')
             
     
@@ -41,6 +41,8 @@ def get_num_mem_objects(history_stream): #no LLM
     return(num_mem_objects)
 
 def get_status(nt4, msg=''): #yes LLM
+    msg = msg.strip()
+    
     if msg=='':
         return("EMPTY CHAT")
     
@@ -50,20 +52,25 @@ def get_status(nt4, msg=''): #yes LLM
         try:
             if(msg == '/start'):
                 new_file_path = chat_opener()
-                with open('ERC-neurotransmitters/new_file_path.txt', 'w') as file:
+                with open('new_file_path.txt', 'w') as file:
                         file.write(new_file_path)
                 status = "SYNTHESIS STARTED"
 
             elif(msg == '/end'):
                 status = "SYNTHESIS ENDED"
-                with open('ERC-neurotransmitters/new_file_path.txt', 'w') as file:
+                with open('new_file_path.txt', 'w') as file:
                         file.write('')
             elif(msg == '/reset future'):
-                with open('ERC-neurotransmitters/companion/Juan/routine.txt', 'r') as file:
+                with open('companion/Juan/routine.txt', 'r') as file:
                     routine = file.read()
-                    with open('ERC-neurotransmitters/companion/Juan/future_plan.txt', 'w') as file:
+                    with open('companion/Juan/future_plan.txt', 'w') as file:
                         file.write(routine)
-                status = "FUTURE RESTORED"
+                        
+            elif(msg.startswith('/plan')):
+                future = msg[5:]
+                with open('companion/Juan/future_plan.txt', 'w') as file:
+                        file.write(future)
+                status = "FUTURE ALTERED"
             else:
                 nt4.process_input(msg) 
                 status = "NTV CHANGED"
@@ -106,7 +113,7 @@ def ERC3_response(temp_memory3, history_stream,new_file_path=None, msg='', chat_
                 with open(new_file_path, 'a') as file:
                         x = str(time.strftime("%H%M")) + ": " + "Human: " + msg + " | "
                         file.write(x)
-            with open('ERC-neurotransmitters/companion/Juan/future_plan.txt', 'r') as file:
+            with open('companion/Juan/future_plan.txt', 'r') as file:
                 future_plan = file.read()
             ntv = NTV(history_stream, temp_memory3[-1]['content'])
             chat_response_ERC3 = response_ERC3(chat_synopsis3, temp_memory3, ntv, future_plan, retreive(temp_memory3 , history_stream))

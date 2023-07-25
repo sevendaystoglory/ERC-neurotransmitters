@@ -3,16 +3,12 @@ import ast
 from tools import *
 import time
 from RUN import RUN
-
-from dotenv import load_dotenv
-load_dotenv()
-
-openai.api_key = os.environ["OPENAI_API_KEY"]
+openai.api_key = "enter key"
 
 from model import model, model2
-with open('ERC-neurotransmitters/companion/Juan/preamble.txt', 'r') as file:
+with open('companion/Juan/preamble.txt', 'r') as file:
         preamble = file.read()
-with open('ERC-neurotransmitters/companion/Juan/future_plan.txt', 'r') as file:
+with open('companion/Juan/future_plan.txt', 'r') as file:
         future_plan = file.read()
 
 def  response_ERC3(synopsis, temp_memory, nt4, future_plans, relevant_history):
@@ -66,7 +62,7 @@ def  response_ERC3(synopsis, temp_memory, nt4, future_plans, relevant_history):
 
      print("ERC3 response", response['choices'][0]['message']['content'], "\n")
      dict_response = retrieve_response(response['choices'][0]['message']['content'])
-     temp_memory[-1]['content'] = temp_memory[-1]['content'] + str(( dict_response + " | ")) 
+     temp_memory[-1]['content'] = temp_memory[-1]['content'] + str(( dict_response)) + " | " 
      return(dict_response)
 
 def response_ERC2(nt4, temp_memory):
@@ -173,7 +169,7 @@ def updated_future_plan(temp_memory,nt4):
 
      #test
      test_preamble = preamble
-     with open('ERC-neurotransmitters/companion/Juan/future_plan.txt', 'r') as file:
+     with open('companion/Juan/future_plan.txt', 'r') as file:
         future_plan = file.read()
      test_future_plan = future_plan
      test_chat = chats
@@ -191,15 +187,16 @@ def updated_future_plan(temp_memory,nt4):
      try:
         reason = response['choices'][0]['message']['content'].split('|')[0].strip()
         future_plan = response['choices'][0]['message']['content'].split('|')[1].strip()
+
      except:
         reason = 'no change in future plan. ERR'
 
      result_dict = {'reasoning' : reason, 'updated future plan' : future_plan}
      if 'updated future plan' in  result_dict:
-          with open('ERC-neurotransmitters/companion/Juan/future_plan.txt', 'w') as file:
+          with open('companion/Juan/future_plan.txt', 'w') as file:
             file.write(result_dict['updated future plan'])
 
-     return(future_plan)
+     return([reason, future_plan])
 
 def retreive(temp_memory, memory_stream):
     query_dict = {}
@@ -226,9 +223,9 @@ def retreive(temp_memory, memory_stream):
     print("MEMORY ERC3:", query_dict)
     return(response['choices'][0]['message']['content'])
 
-def NTV(memory_stream, chats, juan_response):  
+def NTV(memory_stream, chats):  
    memory_object = memory_stream.return_array()[-1]
-   synopsis = memory_object.get_synopsis() + "FOLLOWING IS A CHAT OF JUAN WITH ANOTHER PERSON: "+ chats + "Following this the response that Juan gave to the human: " + juan_response
+   synopsis = memory_object.get_synopsis() + "FOLLOWING IS A CHAT OF JUAN WITH ANOTHER PERSON: " + chats
    dopamine_level=RUN(measure_dopamine(synopsis))
    endorphin_level=RUN(measure_endorphin(synopsis))
    oxytocin_level=RUN(measure_oxytocin(synopsis))

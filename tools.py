@@ -5,7 +5,7 @@ import json
 from dotenv import load_dotenv
 load_dotenv()
 
-openai.api_key = os.environ["OPENAI_API_KEY"]
+openai.api_key = "enter_key"
 
 def isolate_value(value):
     return(value)
@@ -43,7 +43,7 @@ def string_to_dict(input_string):
         return ({"reply_line_1" : 'DECOMMISSIONED', "reply_line_2" : 'DECOMMISSIONED', "reply_line_3" : 'DECOMMISSIONED', "reply_line_4" : 'DECOMMISSIONED'})
 
 def chat_opener():
-    dir_name = 'ERC-neurotransmitters\companion\Juan\chats'
+    dir_name = 'companion\Juan\chats'
     files = os.listdir(dir_name)
     chat_files = [f for f in files if 'chat' in f]
     num_chat_files = len(chat_files)
@@ -69,7 +69,7 @@ def generate_summary(memory):
         model = model,
         messages = memory,
         temperature = 0.4,
-        max_tokens = 400,
+        max_tokens = 400
     )
     memory.pop()
     return(response['choices'][0]['message']['content'])

@@ -8,13 +8,15 @@ from companion.Juan.memory import *
 application = Flask(__name__)
 CORS(application)  # This will enable CORS for all routes
 
-def update(x,y):
-    x=y
-    return(x)
-
-nt4=Neurotransmitter(10,20,30,20)
+nt4=Neurotransmitter(40,20,30,20)
 history_stream = construct_history()
 restore_memory(temp_memory1, temp_memory2, temp_memory3, memory,chat_memory)  
+@application.route('/load', methods=['POST'])
+def loadmemory():
+    global history_stream
+    history_stream = construct_history()
+    return '', 200
+
 @application.route('/refresh', methods=['POST'])
 def refresh():
     restore_memory(temp_memory1, temp_memory2, temp_memory3, memory,chat_memory)
@@ -41,9 +43,6 @@ def get_ntv():
 @application.route('/num_mem_objects', methods=['POST'])
 def num_mem_obj():
     data = request.get_json()
-    load = data['load']
-    if load == 1:
-        update(history_stream, construct_history())
     num = RUN(get_num_mem_objects(history_stream))
     response = {'num': num}
     return jsonify(response)
@@ -58,8 +57,8 @@ def status():
 
 @application.route('/plan', methods=['POST'])
 def plan():
-    plan = RUN(update_plan(temp_memory3, nt4))
-    response = {'plan': plan}
+    [reason, plan] = RUN(update_plan(temp_memory3, nt4))
+    response = {'plan': plan, 'reason' : reason}
     return jsonify(response)
 
 @application.route('/erc1_chat', methods=['POST'])
@@ -82,11 +81,8 @@ def erc2_chat():
 def erc3_chat():
     data = request.get_json()
     message = data['msg']
-    load = data['load']
-    if load == 1:
-        update(history_stream, construct_history())
     chat_synopsis3 = data['chat_synopsis3']
-    with open('ERC-neurotransmitters/new_file_path.txt', 'r') as file:
+    with open('new_file_path.txt', 'r') as file:
         new_file_path = file.read()
         if new_file_path == '':
             new_file_path = None
