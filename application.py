@@ -12,6 +12,7 @@ nt4=Neurotransmitter(40,20,30,20)
 history_stream = construct_history()
 restore_memory(temp_memory1, temp_memory2, temp_memory3, memory,chat_memory)  
 @application.route('/load', methods=['POST'])
+
 def loadmemory():
     global history_stream
     history_stream = construct_history()
